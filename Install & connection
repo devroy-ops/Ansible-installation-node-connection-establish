@@ -1,0 +1,74 @@
+**********************Start*******************************************************
+
+    1  yum update -y
+    2  wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    3  ls
+    4  yum install epel-release-latest-7.noarch.rpm
+    5  yum update - y
+    6  yum install git python python-level python-pip openssl ansible -y
+    7  which -ansible
+    8  ansible --version
+   10  vi /etc/ansible/hosts
+ [demo]
+172.31.46.120
+172.31.38.145
+
+
+[developers]
+
+   11  vi /etc/ansible/ansible.cfg
+
+inventory      = /etc/ansible/hosts(uncommanted)
+
+   17  useradd ansible
+   18  passwd ansible
+
+Go to Node 1 or 2 do same think
+
+Node-1 useradd ansible
+Node-1 passwd ansible
+Node-1 su - ansible
+
+Node-2 useradd ansible
+Node-2 passwd ansible
+node-3 su - ansible
+
+
+NOte:-For root privillage
+
+    19 visudo
+    20 ansible ALL=(ALL) NOPASSWD: ALL    ( Allow root to run any commands anywhere)
+
+NOde-1(root) visudo
+             ansible ALL=(ALL) NOPASSWD: ALL    ( Allow root to run any commands anywhere)
+
+Node-2(root) visudo
+             ansible ALL=(ALL) NOPASSWD: ALL    ( Allow root to run any commands anywhere)
+
+Note:-SSH connaction create betweek node to server
+
+ Server(root) vi /etc/ssh/sshd_config
+ Node-1(root) vi /etc/ssh/sshd_config
+ Node-2(root) vi /etc/ssh/sshd_config
+ 
+  server(root) service sshd restart
+  Node-1(rrot) service sshd restart
+  Node-2(root) service sshd restart
+
+
+Note:- Without password relation between nodes
+
+   server(ansible) ssh-keygen
+   server(ansible) cd .ssh/
+   server(ansible) ls
+   server(ansible) ssh-copy-id ansible@172.31.46.120
+   server(ansible) ssh 172.31.46.120
+
+
+Note:-host pattern
+
+      server(ansible) ansible all --list-hosts
+      server(ansible) ansible demo --list-hosts ( check with group name)
+      server(ansible) ansible demo[0] --list-hosts 
+      server(ansible) 
+
